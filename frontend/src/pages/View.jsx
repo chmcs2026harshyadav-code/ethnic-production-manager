@@ -8,9 +8,7 @@ function View() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(
-        axios.get(`/${id}`)
-      );
+      const res = await axios.get(`/${id}`);
       setProduct(res.data);
     };
     fetchProduct();
@@ -53,7 +51,6 @@ function View() {
         </p>
       </div>
 
-      {/* BUTTONS */}
       <div className="flex gap-4 mt-4">
         <button
           onClick={handlePrint}
@@ -73,7 +70,4 @@ function View() {
   );
 }
 
-
 export default View;
-
-
