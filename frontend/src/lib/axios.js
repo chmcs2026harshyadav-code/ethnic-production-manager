@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/products",
+  baseURL: "https://ethnic-production-manager.onrender.com/products",
 });
 
 export default instance;
