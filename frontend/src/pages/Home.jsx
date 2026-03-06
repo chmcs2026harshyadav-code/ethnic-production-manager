@@ -25,7 +25,7 @@ function Home() {
 
   // FETCH ALL
   const fetchProducts = async () => {
-    const res = await axios.get("http://localhost:3000/products");
+    const res = await axios.get("https://ethnic-production-manager.onrender.com/products");
     setProducts(res.data);
   };
 
@@ -48,7 +48,7 @@ function Home() {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/products/search/custid/${searchId}`
+        `https://ethnic-production-manager.onrender.com/products/search/custid/${searchId}`
       );
       setProducts([res.data]);
     } catch {
@@ -72,7 +72,7 @@ function Home() {
     }
 
     const res = await axios.get(
-      `http://localhost:3000/products/filter/order?type=${value}`
+      `https://ethnic-production-manager.onrender.com/products/filter/order?type=${value}`
     );
     setProducts(res.data);
   };
@@ -85,7 +85,7 @@ function Home() {
     setShowNewOrderTypeInput(false);
 
     const res = await axios.get(
-      `http://localhost:3000/products/filter/order?type=${newOrderType}`
+      `https://ethnic-production-manager.onrender.com/products/filter/order?type=${newOrderType}`
     );
     setProducts(res.data);
 
@@ -102,15 +102,15 @@ function Home() {
     }
 
     const res = await axios.get(
-      "http://localhost:3000/products/sort/noofpiece"
+      "https://ethnic-production-manager.onrender.com/products/sort/noofpiece"
     );
     setProducts(res.data);
   };
 
-  // DELETE (NO CONFIRM)
+  // DELETE
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/products/${id}`);
+      await axios.delete(`https://ethnic-production-manager.onrender.com/products/${id}`);
       toast.success("Order deleted successfully 🗑️");
       fetchProducts();
     } catch {
@@ -120,7 +120,6 @@ function Home() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      {/* CONTROLS */}
       <div className="flex flex-wrap gap-3 mb-6 items-center">
         <div className="relative">
           <input
@@ -135,7 +134,6 @@ function Home() {
             <button
               onClick={() => setSearchId("")}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-500"
-              title="Clear"
             >
               ✕
             </button>
@@ -189,18 +187,12 @@ function Home() {
           <option value="asc">Sort by Pieces</option>
         </select>
 
-        {/* TOTAL ORDERS BOX (NEW) */}
         <div className="bg-white border border-gray-300 px-4 py-2 rounded-md shadow-sm">
-          <span className="text-gray-700 font-medium">
-            Total Orders:
-          </span>
-          <span className="ml-2 text-blue-600 font-bold">
-            {products.length}
-          </span>
+          <span className="text-gray-700 font-medium">Total Orders:</span>
+          <span className="ml-2 text-blue-600 font-bold">{products.length}</span>
         </div>
       </div>
 
-      {/* CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((p) => (
           <div
@@ -227,16 +219,10 @@ function Home() {
             </p>
 
             <div className="flex gap-3 mt-4">
-              <Link
-                to={`/view/${p._id}`}
-                className="bg-blue-600 px-3 py-1 rounded text-sm"
-              >
+              <Link to={`/view/${p._id}`} className="bg-blue-600 px-3 py-1 rounded text-sm">
                 View
               </Link>
-              <Link
-                to={`/edit/${p._id}`}
-                className="bg-yellow-500 text-black px-3 py-1 rounded text-sm"
-              >
+              <Link to={`/edit/${p._id}`} className="bg-yellow-500 text-black px-3 py-1 rounded text-sm">
                 Edit
               </Link>
               <button
