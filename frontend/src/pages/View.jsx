@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../lib/axios";
 import { useParams, Link } from "react-router-dom";
 
 function View() {
@@ -75,3 +75,4 @@ function View() {
 
 
 export default View;
+
