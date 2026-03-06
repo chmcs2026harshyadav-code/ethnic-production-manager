@@ -127,7 +127,7 @@ function Create() {
     }
 
     try {
-      await axios.post("/products", {
+      await axios.post("/", {
         ...formData,
         no_of_piece: Number(formData.no_of_piece),
         cost: Number(formData.cost),
