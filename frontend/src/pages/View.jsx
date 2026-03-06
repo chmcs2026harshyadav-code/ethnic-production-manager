@@ -9,7 +9,7 @@ function View() {
   useEffect(() => {
     const fetchProduct = async () => {
       const res = await axios.get(
-        axios.get(`/products/${id}`)
+        axios.get(`/${id}`)
       );
       setProduct(res.data);
     };
@@ -75,4 +75,5 @@ function View() {
 
 
 export default View;
+
 
