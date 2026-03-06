@@ -18,8 +18,102 @@ function Create() {
     address: "",
   });
 
+  // Order Types
+  const [orderTypes, setOrderTypes] = useState([
+    "Party-Wear",
+    "Casual",
+    "Formal",
+    "Ethnic",
+    "Indo-Western",
+  ]);
+  const [newOrderType, setNewOrderType] = useState("");
+  const [showOrderTypeInput, setShowOrderTypeInput] = useState(false);
+
+  // Materials
+  const [materials, setMaterials] = useState([
+    "Banarasi Silk",
+    "Chinese Silk",
+  ]);
+  const [newMaterial, setNewMaterial] = useState("");
+  const [showMaterialInput, setShowMaterialInput] = useState(false);
+
+  // Colors
+  const [colors, setColors] = useState([
+    "Red",
+    "Blue",
+    "Green",
+    "Yellow",
+    "Black",
+    "White",
+    "Pink",
+    "Purple",
+    "Orange",
+    "Brown",
+    "Grey",
+    "Maroon",
+  ]);
+  const [newColor, setNewColor] = useState("");
+  const [showColorInput, setShowColorInput] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Order Type
+  const handleOrderTypeChange = (e) => {
+    if (e.target.value === "ADD_NEW") {
+      setShowOrderTypeInput(true);
+      setFormData({ ...formData, order_type: "" });
+    } else {
+      setShowOrderTypeInput(false);
+      setFormData({ ...formData, order_type: e.target.value });
+    }
+  };
+
+  const addNewOrderType = () => {
+    if (!newOrderType.trim()) return;
+    setOrderTypes([...orderTypes, newOrderType]);
+    setFormData({ ...formData, order_type: newOrderType });
+    setNewOrderType("");
+    setShowOrderTypeInput(false);
+  };
+
+  // Material
+  const handleMaterialChange = (e) => {
+    if (e.target.value === "ADD_NEW") {
+      setShowMaterialInput(true);
+      setFormData({ ...formData, material: "" });
+    } else {
+      setShowMaterialInput(false);
+      setFormData({ ...formData, material: e.target.value });
+    }
+  };
+
+  const addNewMaterial = () => {
+    if (!newMaterial.trim()) return;
+    setMaterials([...materials, newMaterial]);
+    setFormData({ ...formData, material: newMaterial });
+    setNewMaterial("");
+    setShowMaterialInput(false);
+  };
+
+  // Color
+  const handleColorChange = (e) => {
+    if (e.target.value === "ADD_NEW") {
+      setShowColorInput(true);
+      setFormData({ ...formData, color: "" });
+    } else {
+      setShowColorInput(false);
+      setFormData({ ...formData, color: e.target.value });
+    }
+  };
+
+  const addNewColor = () => {
+    if (!newColor.trim()) return;
+    setColors([...colors, newColor]);
+    setFormData({ ...formData, color: newColor });
+    setNewColor("");
+    setShowColorInput(false);
   };
 
   const handleSubmit = async (e) => {
@@ -40,7 +134,11 @@ function Create() {
       });
 
       toast.success("Order added successfully ✅");
-      navigate("/");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 800);
+
     } catch {
       toast.error("Failed to add order ❌");
     }
@@ -55,16 +153,68 @@ function Create() {
         <input name="customer_id" placeholder="Customer ID" onChange={handleChange} className="border p-2 w-full"/>
         <input name="cust_name" placeholder="Customer Name" onChange={handleChange} className="border p-2 w-full"/>
         <input name="cust_phone_no" placeholder="Phone Number" onChange={handleChange} className="border p-2 w-full"/>
-        <input name="order_type" placeholder="Order Type" onChange={handleChange} className="border p-2 w-full"/>
-        <input name="material" placeholder="Material" onChange={handleChange} className="border p-2 w-full"/>
-        <input name="color" placeholder="Color" onChange={handleChange} className="border p-2 w-full"/>
+
+        {/* Order Type */}
+        <select onChange={handleOrderTypeChange} className="border p-2 w-full">
+          <option value="">Select Order Type</option>
+          {orderTypes.map((o, i) => (
+            <option key={i} value={o}>{o}</option>
+          ))}
+          <option value="ADD_NEW">➕ Add New...</option>
+        </select>
+
+        {showOrderTypeInput && (
+          <div className="flex gap-2">
+            <input value={newOrderType} onChange={(e)=>setNewOrderType(e.target.value)} className="border p-2 flex-1" placeholder="New order type"/>
+            <button type="button" onClick={addNewOrderType} className="bg-green-600 text-white px-4">Add</button>
+          </div>
+        )}
+
+        {/* Material */}
+        <select onChange={handleMaterialChange} className="border p-2 w-full">
+          <option value="">Select Material</option>
+          {materials.map((m,i)=>(
+            <option key={i} value={m}>{m}</option>
+          ))}
+          <option value="ADD_NEW">➕ Add New...</option>
+        </select>
+
+        {showMaterialInput && (
+          <div className="flex gap-2">
+            <input value={newMaterial} onChange={(e)=>setNewMaterial(e.target.value)} className="border p-2 flex-1" placeholder="New material"/>
+            <button type="button" onClick={addNewMaterial} className="bg-green-600 text-white px-4">Add</button>
+          </div>
+        )}
+
+        {/* Color */}
+        <select onChange={handleColorChange} className="border p-2 w-full">
+          <option value="">Select Color</option>
+          {colors.map((c,i)=>(
+            <option key={i} value={c}>{c}</option>
+          ))}
+          <option value="ADD_NEW">➕ Add New...</option>
+        </select>
+
+        {showColorInput && (
+          <div className="flex gap-2">
+            <input value={newColor} onChange={(e)=>setNewColor(e.target.value)} className="border p-2 flex-1" placeholder="New color"/>
+            <button type="button" onClick={addNewColor} className="bg-green-600 text-white px-4">Add</button>
+          </div>
+        )}
+
         <input name="no_of_piece" type="number" placeholder="No of Pieces" onChange={handleChange} className="border p-2 w-full"/>
         <input name="cost" type="number" placeholder="Cost" onChange={handleChange} className="border p-2 w-full"/>
         <textarea name="address" placeholder="Address" onChange={handleChange} className="border p-2 w-full"/>
 
-        <button type="submit" className="bg-blue-600 text-white py-2 w-full rounded">
-          Save Order
-        </button>
+        <div className="flex gap-3">
+          <button type="submit" className="bg-blue-600 text-white py-2 w-full rounded">
+            Save Order
+          </button>
+
+          <button type="button" onClick={()=>navigate("/")} className="bg-gray-500 text-white py-2 w-full rounded">
+            Back
+          </button>
+        </div>
 
       </form>
     </div>
