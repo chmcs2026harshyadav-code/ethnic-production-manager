@@ -11,18 +11,24 @@ dotenv.config();
 const app = express();
 
 const port = process.env.PORT || 3000;
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://ethnic-production-manager-1.onrender.com"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 app.use(express.json());
-app.use("/products", productRoutes)
+
+app.use("/products", productRoutes);
 
 connectDB().then(() => {
-    app.listen(port, () => {
-        console.log(`http://localhost:${port}/products`);
-    });
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
 });
